@@ -2,7 +2,6 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-
         // Step 1: Initialize backend subsystems
         UserDataSubsystem userDataSubsystem = new UserDataSubsystem();
         userDataSubsystem.loadFromFile();
@@ -45,22 +44,30 @@ public class Main {
 
                 switch (userType.toLowerCase()) {
                     case "attendee":
-                        // Display AttendeeHomepage if login is for an attendee
+                        // Navigate to AttendeeHomepage
                         Attendee loggedInAttendee = userDataSubsystem.getAttendeeByUsername(username);
                         if (loggedInAttendee != null) {
-                            AttendeeHomepage homepage = new AttendeeHomepage(loggedInAttendee.getName());
-                            frame.setContentPane(homepage.getMainPanel());
+                            AttendeeHomepage attendeeHomepage = new AttendeeHomepage(loggedInAttendee.getName());
+                            frame.setContentPane(attendeeHomepage.getMainPanel());
                             frame.pack();
                         }
                         break;
+
                     case "speaker":
-                        // Placeholder for SpeakerHomepage
-                        JOptionPane.showMessageDialog(frame, "Speaker homepage not implemented yet.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        // Navigate to SpeakerHomepage
+                        Speaker loggedInSpeaker = userDataSubsystem.getSpeakerByUsername(username);
+                        if (loggedInSpeaker != null) {
+                            SpeakerHomepage speakerHomepage = new SpeakerHomepage(loggedInSpeaker.getName());
+                            frame.setContentPane(speakerHomepage.getMainPanel());
+                            frame.pack();
+                        }
                         break;
+
                     case "admin":
                         // Placeholder for AdminHomepage
                         JOptionPane.showMessageDialog(frame, "Admin homepage not implemented yet.", "Info", JOptionPane.INFORMATION_MESSAGE);
                         break;
+
                     default:
                         JOptionPane.showMessageDialog(frame, "Unknown user type.", "Error", JOptionPane.ERROR_MESSAGE);
                         break;

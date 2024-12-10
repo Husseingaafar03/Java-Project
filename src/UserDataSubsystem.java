@@ -5,11 +5,15 @@ import java.util.Map;
 public class UserDataSubsystem {
     private Map<String, Attendee> attendeeMap;
     private Map<String, Speaker> speakerMap;
+    private Map<String, Admin> adminMap; // Add this
+
     private static final String FILE_NAME = "userData.txt";
 
     public UserDataSubsystem() {
         attendeeMap = new HashMap<>();
         speakerMap = new HashMap<>();
+        adminMap = new HashMap<>(); // Initialize admin map
+
         loadFromFile();
     }
     public Attendee getAttendeeByUsername(String username) {
@@ -20,6 +24,14 @@ public class UserDataSubsystem {
         }
         return null;
     }
+    public void addAdmin(Admin admin) {
+        adminMap.put(admin.getUsername(), admin); // Use username as key
+    }
+
+    public Admin getAdminByUsername(String username) {
+        return adminMap.get(username);
+    }
+
     public Speaker getSpeakerByUsername(String username) {
         for (Speaker speaker : speakerMap.values()) {
             if (username != null && username.equals(speaker.getUsername())) {

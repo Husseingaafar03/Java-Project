@@ -49,15 +49,12 @@ public class UserManagementSubsystem {
             case "attendee":
                 Attendee attendee = userDataSubsystem.getAttendeeByUsername(username);
                 return attendee != null && attendee.getPassword().equals(password);
-
             case "speaker":
                 Speaker speaker = userDataSubsystem.getSpeakerByUsername(username);
                 return speaker != null && speaker.getPassword().equals(password);
-
             case "admin":
-                // Admin login logic
-                return "admin".equals(username) && "password".equals(password);
-
+                Admin admin = userDataSubsystem.getAdminByUsername(username);
+                return admin != null && admin.getPassword().equals(password);
             default:
                 return false;
         }

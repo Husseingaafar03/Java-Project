@@ -12,7 +12,22 @@ public class UserDataSubsystem {
         speakerMap = new HashMap<>();
         loadFromFile();
     }
-
+    public Attendee getAttendeeByUsername(String username) {
+        for (Attendee attendee : attendeeMap.values()) {
+            if (username != null && username.equals(attendee.getUsername())) {
+                return attendee;
+            }
+        }
+        return null;
+    }
+    public Speaker getSpeakerByUsername(String username) {
+        for (Speaker speaker : speakerMap.values()) {
+            if (username != null && username.equals(speaker.getUsername())) {
+                return speaker;
+            }
+        }
+        return null;
+    } 
     public void addAttendee(Attendee attendee) {
         attendeeMap.put(attendee.getAttendeeID(), attendee);
         saveToFile();
@@ -65,17 +80,22 @@ public class UserDataSubsystem {
         }
     }
 
-    private void loadFromFile() {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
-                Object[] maps = (Object[]) ois.readObject();
-                attendeeMap = (HashMap<String, Attendee>) maps[0];
-                speakerMap = (HashMap<String, Speaker>) maps[1];
-            } catch (FileNotFoundException e) {
-                System.out.println("File not found, initializing new maps.");
-            } catch (IOException | ClassNotFoundException e) {
-                System.err.println("Error loading data: " + e.getMessage());
-            }
+    public void loadFromFile() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            Object[] maps = (Object[]) ois.readObject();
+            attendeeMap = (HashMap<String, Attendee>) maps[0];
+            speakerMap = (HashMap<String, Speaker>) maps[1];
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found, initializing new maps.");
+            attendeeMap = new HashMap<>();
+            speakerMap = new HashMap<>();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading data: " + e.getMessage());
+            attendeeMap = new HashMap<>();
+            speakerMap = new HashMap<>();
         }
     }
+
+}
 
 

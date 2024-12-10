@@ -19,12 +19,13 @@ public class FeedbackDataSubsystem {
     public List<Feedback> getFeedbackForSession(String sessionID) {
         List<Feedback> sessionFeedback = new ArrayList<>();
         for (Feedback feedback : feedbackList) {
-            if (feedback.getSessionID().equals(sessionID)) {
+            if (sessionID != null && sessionID.equals(feedback.getSessionID())) {
                 sessionFeedback.add(feedback);
             }
         }
         return sessionFeedback;
     }
+
 
     public List<Feedback> getFeedbackForAttendee(String attendeeID) {
         List<Feedback> attendeeFeedback = new ArrayList<>();

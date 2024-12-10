@@ -44,4 +44,22 @@ public class UserManagementSubsystem {
         userDataSubsystem.removeSpeaker(speakerID);
         System.out.println("Speaker removed with ID: " + speakerID);
     }
+    public boolean authenticateUser(String userType, String username, String password) {
+        switch (userType.toLowerCase()) {
+            case "attendee":
+                Attendee attendee = userDataSubsystem.getAttendeeByUsername(username);
+                return attendee != null && attendee.getPassword().equals(password);
+
+            case "speaker":
+                Speaker speaker = userDataSubsystem.getSpeakerByUsername(username);
+                return speaker != null && speaker.getPassword().equals(password);
+
+            case "admin":
+                // Admin login logic
+                return "admin".equals(username) && "password".equals(password);
+
+            default:
+                return false;
+        }
+    }
 }
